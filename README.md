@@ -38,12 +38,19 @@ $ npm install
 to install the dependencies for backend application
 
 ### Vagrant commands
-Commands that can be executed from the terminal (from the ***contadev*** folder) is:<br />
+Commands that can be executed from the terminal (from the ***spark*** folder) is:<br />
 `vagrant up` = starts the server<br />
 `vagrant halt` = stops the server<br />
 `vagrant status` = show server status<br />
 `vagrant provision` = applies the latest Conta specific updates<br />
 `vagrant ssh` = starts a ssh session on the vm guest<br />
+
+### Environment domains
+Every domain inside the ends with ***spark.dev***
+`kibana.spark.dev` = Is the control panel of kibana<br />
+`elastic.spark.dev` = Is the ElasticSearch API<br />
+`app.spark.dev` = Is the front-end app<br />
+`api.spark.dev` = Is the backend<br />
 
 ### Troubleshooting
 The box is passive of bug on authentication.
