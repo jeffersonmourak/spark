@@ -46,7 +46,7 @@ Commands that can be executed from the terminal (from the ***spark*** folder) is
 `vagrant ssh` = starts a ssh session on the vm guest<br />
 
 ### Environment domains
-Every domain inside the ends with ***spark.dev***
+Every domain inside the ends with ***spark.dev***<br />
 `kibana.spark.dev` = Is the control panel of kibana<br />
 `elastic.spark.dev` = Is the ElasticSearch API<br />
 `app.spark.dev` = Is the front-end app<br />
