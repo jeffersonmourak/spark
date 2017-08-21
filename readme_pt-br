@@ -44,6 +44,14 @@ Comandos que podem ser executados do terminal (dentro da pasta ***spark***):<br 
 `vagrant provision` = Aplica as ultimas mudanças do ambiente<br />
 `vagrant ssh` = Acessa o ambiente como usuário ***root***<br />
 
+
+### Dominios do ambiente
+Todos os dominios do ambiente terminam com ***spark.dev***<br />
+`kibana.spark.dev` = é o painel de controle do kibana<br />
+`elastic.spark.dev` = é a API do ElasticSearch<br />
+`app.spark.dev` = é o app front-end<br />
+`api.spark.dev` = é o backend<br />
+
 ### Resolução de problemas
 Esse serviço está passivo de problemas com a autenticação.
 Se no processo de inicialização apresentar essa sequencia...
