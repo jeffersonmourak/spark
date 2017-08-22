@@ -8,7 +8,7 @@ Virtualbox: 5.0.20r106931;
 Vagrant: 1.8.1
 ```
 
-Baixe o nosso ambiente de desenvolvimento [aqui](#TODO).<br />
+Baixe o nosso ambiente de desenvolvimento [aqui](https://drive.google.com/open?id=0ByIrNE1FFAWqUVU2bFEtOEZ0RTQ).<br />
 Descompact o arquivo direto na ***pasta home*** e ela irá criar um diretório com o nome ***spark*** (~/spark).
 
 ***ATENÇÃO:*** O ***~*** (TIL) referencia a pasta home do usuário logado. No meu caso, terá a seguinte estrutura ***/Users/jeffersonmourak/spark/***
