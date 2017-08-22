@@ -9,7 +9,7 @@ Virtualbox: 5.0.20r106931;
 Vagrant: 1.8.1
 ```
 
-Download our local Vagrant environment from [here](#TODO).<br />
+Download our local Vagrant environment from [here](https://drive.google.com/open?id=0ByIrNE1FFAWqUVU2bFEtOEZ0RTQ).<br />
 Unpack directly in your ***home folder*** and it will create a folder named ***spark*** (~/spark).
 
 ***Notice:*** that ***~*** (tilde) refers to the home folder of the logged in user. In my case I will now have the folder structure ***/Users/jeffersonmourak/spark/***
