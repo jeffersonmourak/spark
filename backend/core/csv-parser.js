@@ -3,7 +3,7 @@ const _ = require('lodash');
 class CSV {
   static get regex() {
     return {
-      string: /\"(\S+)\"/g,
+      string: /\"(.*)\"/g,
       camel: /_(\S)/g
     };
   }
@@ -36,13 +36,17 @@ class CSV {
       return key;
     });
   }
-
+  // @TODO DO!
   static extract(lines, heads) {
 
     return lines.map(line => {
       line = line.split(';');
-      console.log("#####");
+
       line.map(data => {
+        let matchData = new RegExp(CSV.regex.string).exec(data);
+        if (matchData !== null) {
+          data = matchData[1];
+        }
         console.log(data);
       });
     })
