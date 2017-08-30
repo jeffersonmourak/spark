@@ -4,7 +4,10 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
-    "express": "^4.15.4"
+    "express": "^4.15.4",
+    "jsdom": "^11.2.0",
+    "lodash": "^4.17.4",
+    "request": "^2.81.0"
   },
   "devDependencies": {},
   "scripts": {
