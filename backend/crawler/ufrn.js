@@ -1,7 +1,7 @@
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
-const HTTP = require('../http');
-const URLS = require('./urls.json');
+const HTTP = require('@core/http');
+const URLS = require('@crawler/urls.json');
 
 /**
   Acquire function
@@ -9,7 +9,7 @@ const URLS = require('./urls.json');
   @description
   Funcion to access and find the dynamic URL for CSV file inside open data
   platform of UFRN
-  
+
   @param {String} url Url of pafge.
 */
 async function acquire(url) {

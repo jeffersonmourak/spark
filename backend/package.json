@@ -7,7 +7,13 @@
     "express": "^4.15.4",
     "jsdom": "^11.2.0",
     "lodash": "^4.17.4",
+    "module-alias": "^2.0.1",
     "request": "^2.81.0"
+  },
+  "_moduleAliases": {
+    "@core": "./core",
+    "@crawler": "./crawler",
+    "@root": "."
   },
   "devDependencies": {},
   "scripts": {
