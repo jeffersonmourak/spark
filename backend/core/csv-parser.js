@@ -9,10 +9,14 @@ class CSV {
   }
 
   static getLines(fileString) {
-    return fileString.split('\n');
+    var lines = fileString.split('\n');
+    lines.shift();
+    return lines.join('');;
   }
 
   static camelfy(string) {
+    if(string === undefined) return;
+
     let matches = string.match(CSV.regex.camel);
     if (matches !== null) {
       matches.forEach( key => {
@@ -24,8 +28,9 @@ class CSV {
     return string;
   }
 
-  static getHeads(fistLine) {
-    return fistLine.split(';').map(key => {
+  static getHeads(text) {
+    var firstLine = text.split('\n').shift();
+    var vector = firstLine.split(';').map(key => {
       let match = new RegExp(CSV.regex.string).exec(key);
 
       if (match === null) {
@@ -35,22 +40,53 @@ class CSV {
 
       return key;
     });
+
+    var vector_final = [];
+    for(var loop = 0; loop < Object.keys(vector).length-1; loop++)
+      vector_final[loop] = vector[loop];
+
+    return vector_final;
   }
-  // @TODO DO!
-  static extract(lines, heads) {
 
-    return lines.map(line => {
-      line = line.split(';');
+  /**
+    extract
 
-      line.map(data => {
+    @description
+    Extract the csv elements
+
+    @param {String} text The text os body
+    @param {String} heads vector containing header
+    @returns {Object}
+  */
+  static extract(text, heads) {
+
+      var vector = text.split(';');
+
+      var vector_final = vector.map(data => {
         let matchData = new RegExp(CSV.regex.string).exec(data);
         if (matchData !== null) {
           data = matchData[1];
         }
-        console.log(data);
+        return data;
       });
-    })
+
+      var object_extracted = {};
+      var n_elements = 0;    
+      for(var loop = 0; loop < Object.keys(vector_final).length-1; /* empty */ ) {
+
+        object_extracted[n_elements] = {};
+
+        for(var internal_loop = 0; internal_loop < Object.keys(heads).length; internal_loop++) {
+          object_extracted[n_elements][heads[internal_loop]] = vector_final[loop];
+          loop++;
+        }
+
+        n_elements++;
+      }
+
+      return object_extracted;
   }
+
 }
 
 module.exports = CSV;
