@@ -1,0 +1,6 @@
+language: node_js
+node_js:
+  - "8.4"
+script:
+  - "npm test --prefix ./backend"
+  # - "npm test --prefix ./app"

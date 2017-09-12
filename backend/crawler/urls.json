@@ -1,3 +1,5 @@
 {
-  "people": "http://dados.ufrn.br/dataset/pessoas" 
+  "people": "http://dados.ufrn.br/dataset/pessoas",
+  "extension": "http://dados.ufrn.br/dataset/atividades-de-extensao",
+  "builds": "http://dados.ufrn.br/dataset/obras"
 }

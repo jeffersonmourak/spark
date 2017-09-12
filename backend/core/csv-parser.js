@@ -70,9 +70,9 @@ class CSV {
         return data;
       });
 
-      var object_extracted = {};
-      var n_elements = 0;    
-      for(var loop = 0; loop < Object.keys(vector_final).length-1; /* empty */ ) {
+      var object_extracted = [];
+      var n_elements = 0;
+      for(var loop = 0; loop < Object.keys(vector_final).length-1;) {
 
         object_extracted[n_elements] = {};
 

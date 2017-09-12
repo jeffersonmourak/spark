@@ -1,2 +1,3 @@
 backend/node_modules
+backend/mochawesome-report
 app/node_modules

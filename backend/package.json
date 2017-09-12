@@ -4,20 +4,38 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
+    "blanket": "^1.2.3",
+    "expect.js": "^0.3.1",
     "express": "^4.15.4",
+    "grunt": "^1.0.1",
     "jsdom": "^11.2.0",
     "lodash": "^4.17.4",
+    "mocha": "^3.5.3",
     "module-alias": "^2.0.1",
     "request": "^2.81.0"
+  },
+  "config": {
+    "blanket": {
+      "pattern": [
+        "**/*.js"
+      ],
+      "data-cover-never": [
+        "node_modules",
+        "tests"
+      ]
+    }
   },
   "_moduleAliases": {
     "@core": "./core",
     "@crawler": "./crawler",
-    "@root": "."
+    "@root": ".",
+    "@test": "../tests_helper"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mochawesome": "^2.3.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha $(find . -name '*.spec.js') --require blanket -R mochawesome",
     "start": "node server.js"
   },
   "author": "",
