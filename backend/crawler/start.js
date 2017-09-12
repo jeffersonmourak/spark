@@ -1,5 +1,15 @@
-const ufrn = require('./ufrn');
+require('module-alias/register');
 
-ufrn.acquire(ufrn.urls.people).then(csv => {
-  console.log(csv);
+const fs = require('fs'),
+      ufrn = require('@crawler/ufrn'),
+      CSV = require('@core/csv-parser');
+
+console.log('Accessing UFRN data');
+
+ufrn.acquire(ufrn.urls.builds).then(csv => {
+  console.log('Data acquired!')
+  var elements = CSV.getLines(csv);
+  console.log(`Parsing ${elements.length} lines`);
+  var head = CSV.getHeads(csv);
+  data = CSV.extract(elements, head);
 });
