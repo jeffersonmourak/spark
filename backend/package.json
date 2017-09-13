@@ -35,7 +35,9 @@
     "mochawesome": "^2.3.0"
   },
   "scripts": {
-    "test": "mocha $(find . -name '*.spec.js') --ignore-leaks --require blanket --require ../tests_helper/helper.js -R mochawesome",
+    "unit": "mocha $(find . -name '*.spec.js') --ignore-leaks --require blanket --require ../tests_helper/helper.js -R mochawesome",
+    "verify-structure": "node ../tests_helper/file-coverage.js",
+    "test": "npm run verify-structure && npm run unit",
     "start": "node server.js"
   },
   "author": "",
