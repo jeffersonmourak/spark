@@ -5,13 +5,11 @@
   "main": "server.js",
   "dependencies": {
     "blanket": "^1.2.3",
-    "expect.js": "^0.3.1",
     "express": "^4.15.4",
     "grunt": "^1.0.1",
     "jsdom": "^11.2.0",
     "lodash": "^4.17.4",
     "mocha": "^3.5.3",
-    "module-alias": "^2.0.1",
     "request": "^2.81.0"
   },
   "config": {
@@ -35,7 +33,7 @@
     "mochawesome": "^2.3.0"
   },
   "scripts": {
-    "test": "mocha $(find . -name '*.spec.js') --require blanket -R mochawesome",
+    "test": "mocha $(find . -name '*.spec.js') --ignore-leaks --require blanket --require ../tests_helper/helper.js -R mochawesome",
     "start": "node server.js"
   },
   "author": "",
