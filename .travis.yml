@@ -2,5 +2,5 @@ language: node_js
 node_js:
   - "8.4"
 script:
-  - "npm install --prefix ./backend && npm test --prefix ./backend"
+  - "npm install --prefix ./backend && npm install --prefix ./tests_helper && npm test --prefix ./backend"
   # - "npm test --prefix ./app"
