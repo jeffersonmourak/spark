@@ -30,11 +30,12 @@ class CSV {
 
   static getHeads(text) {
     var firstLine = text.split('\n').shift();
+
     var vector = firstLine.split(';').map(key => {
       let match = new RegExp(CSV.regex.string).exec(key);
 
       if (match === null) {
-        return;
+        return CSV.camelfy(key);
       }
       key = CSV.camelfy(match[1]);
 
