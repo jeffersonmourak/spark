@@ -60,15 +60,26 @@ class CSV {
   */
   static extract(text, heads) {
 
-      var vector = text.split(';');
-
-      var vector_final = vector.map(data => {
-        let matchData = new RegExp(CSV.regex.string).exec(data);
-        if (matchData !== null) {
-          data = matchData[1];
+      var vector_final = [];
+      var acumulado = '';
+      var acumulando = false;
+      var n = 0;
+      for(var x = 0; x < text.length; x++) {
+        if(text[x] == '"') {
+          if(acumulando && text[x+1] == ';') {
+            acumulando = false;
+            vector_final[n] = acumulado;
+            n++;
+          }
+          else {
+            acumulando = true;
+            acumulado = '';
+          }
         }
-        return data;
-      });
+        else {
+          if(acumulando) acumulado += text[x];
+        }
+      }
 
       var object_extracted = [];
       var n_elements = 0;
@@ -77,7 +88,8 @@ class CSV {
         object_extracted[n_elements] = {};
 
         for(var internal_loop = 0; internal_loop < Object.keys(heads).length; internal_loop++) {
-          object_extracted[n_elements][heads[internal_loop]] = vector_final[loop];
+          if(vector_final[loop] !== undefined) object_extracted[n_elements][heads[internal_loop]] = vector_final[loop];
+          else object_extracted[n_elements][heads[internal_loop]] = '';
           loop++;
         }
 
