@@ -9,6 +9,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "lodash": "^4.17.4"
+    "expect.js": "^0.3.1",
+    "lodash": "^4.17.4",
+    "mocha": "^3.5.3",
+    "module-alias": "^2.0.1",
+    "sinon": "^3.2.1"
+  },
+  "_moduleAliases": {
+    "@core": "../backend/core",
+    "@crawler": "../backend/crawler",
+    "@root": "../backend",
+    "@test": "."
   }
 }
