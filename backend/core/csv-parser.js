@@ -1,17 +1,21 @@
 const _ = require('lodash');
+const Base = require('@models/base');
+const base = new Base([]);
 
 class CSV {
   static get regex() {
     return {
       string: /\"(.*)\"/g,
+      field: /(\"([\s\S]*?)\"\;)/g,
       camel: /_(\S)/g
     };
   }
 
-  static getLines(fileString) {
-    var lines = fileString.split('\n');
+  static getLines(fileString, model = base) {
+    let fields = model.getFields(),
+        lineRegex = new RegExp('(\\"([\\s\\S]*?)\\"\\;){' + fields.length + '}', 'g');
 
-    return lines;
+    return fileString.match(lineRegex);
   }
 
   static camelfy(string) {
@@ -59,7 +63,8 @@ class CSV {
     @returns {Array}
   */
   static parseLineValue(line) {
-    return _.map(line.split(';'), data => {
+    debugger;
+    return _.map(line.match(CSV.regex.field), data => {
       let matchData = new RegExp(CSV.regex.string).exec(data);
 
         if (matchData !== null) {

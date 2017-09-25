@@ -2,17 +2,21 @@ require('module-alias/register');
 
 const fs = require('fs'),
       ufrn = require('@crawler/ufrn'),
-      CSV = require('@core/csv-parser');
+      CSV = require('@core/csv-parser'),
+      BuildsModel = require('@models/builds');
 
 console.log('Accessing UFRN data');
 
-ufrn.acquire(ufrn.urls.people).then(csv => {
-  console.log('Data acquired!')
-  var elements = CSV.getLines(csv);
+ufrn.acquire(ufrn.urls.builds).then(csv => {
+  console.log('Data acquired!');
+  let model = new BuildsModel();
+
+  var elements = CSV.getLines(csv, model);
+  elements.shift();
 
   console.log(`Parsing ${elements.length} lines`);
-  var head = CSV.getHeads(csv);
-  data = CSV.extract(elements, head);
+
+  data = CSV.extract(elements, model.getFields());
 
   fs.writeFile("data.json", JSON.stringify(data, null, 4), function(err) {
       if(err) {

@@ -3,22 +3,51 @@ const { JSDOM } = jsdom;
 const HTTP = require('@core/http');
 const URLS = require('@crawler/urls.json');
 
-/**
-  Acquire function
+class UFRN {
+  static get urls() {
+    return URLS;
+  }
 
-  @description
-  Funcion to access and find the dynamic URL for CSV file inside open data
-  platform of UFRN
+  /**
+    Get Page
+    @private
+    @description
+    Returns a JSDOM object with functions to find elements.
 
-  @param {String} url Url of pafge.
-*/
-async function acquire(url) {
-  let page = new JSDOM(await HTTP.get(url)),
-      fileDownload = page.window.document.querySelectorAll('.resource-url-analytics')[0].href;
-  return await HTTP.get(fileDownload);
+    @param {String} htmlCode HTML content of target page.
+    @returns {JSDOM}
+  */
+  static _getPage(htmlCode) {
+    return new JSDOM(htmlCode);
+  }
+
+  /**
+    Download File content
+    @private
+    @description
+    this function returns the URL for a dynamic csv file inside the page.
+
+    @param {JSDOM} page JSDOM object of page.
+    @returns {String}
+  */
+  static _downloadFile(page) {
+    return page.window.document.querySelectorAll('.resource-url-analytics')[0].href
+  }
+
+  /**
+    Acquire function
+
+    @description
+    Funcion to access and find the dynamic URL for CSV file inside open data
+    platform of UFRN
+
+    @param {String} url Url of page.
+  */
+  static async acquire(url) {
+    let page = UFRN._getPage(await HTTP.get(url)),
+        fileDownload = UFRN._downloadFile(page);
+    return await HTTP.get(fileDownload);
+  }
 }
 
-module.exports = {
-  acquire: acquire,
-  urls: URLS
-};
+module.exports = UFRN;
