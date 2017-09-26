@@ -4,6 +4,7 @@ new TestTarget(CSV, {
   exposed: {
     regex: {
       string: 'regexp',
+      field: 'regexp',
       camel: 'regexp'
     },
     getLines: 'function',
@@ -16,10 +17,15 @@ new TestTarget(CSV, {
   tests: {
     getLines: () => {
       it('should split the lines', () => {
-          let data = ['hello', 'world'],
-              str = 'hello\nworld';
+          let data = ['"hello";"world";', '"other line";"other value";'],
+              str = '"hello";"world";\n"other line";"other value";',
+              model = {
+                getFields: () => {
+                  return ['hello', 'world'];
+                }
+              };
 
-          expect(_.isEqual(CSV.getLines(str), data)).to.be(true);
+          expect(_.isEqual(CSV.getLines(str, model), data)).to.be(true);
       });
     },
     camelfy: () => {
@@ -63,54 +69,52 @@ new TestTarget(CSV, {
       let csvString, heads, lines;
       beforeEach(() => {
         lines = [
-          'hello_world; value_one; value_two;',
-          'hi world; value1; value2;',
-          'hei verden; verdi en; verdi to;',
-          'ola mundo; valor um; valor dois;',
+          '"hello_world";"value_one";"value_two";',
+          '"hi world";"value1";"value2";',
+          '"hei verden";"verdi en";"verdi to";',
+          '"ola mundo";"valor um";"valor dois";',
         ];
         csvString = lines.join('\n');
-        lines = CSV.getLines(csvString);
-        heads = CSV.getHeads(csvString);
+        let model = {
+          getFields: () => {
+            return ['helloWorld', 'valueOne', 'valueTwo'];
+          }
+        };
+        lines = CSV.getLines(csvString, model);
+        heads = ['helloWorld', 'valueOne', 'valueTwo'];
+
       });
 
       it('should return a array', () => {
         let expectedArray = [
-          {
-            helloWorld: 'hello_world',
-            ' valueOne': ' value_one',
-            ' valueTwo': ' value_two'
-          },
-          {
-            helloWorld: 'hi world',
-            ' valueOne': ' value1',
-            ' valueTwo': ' value2'
-          },
-          {
-            helloWorld: 'hei verden',
-            ' valueOne': ' verdi en',
-            ' valueTwo': ' verdi to'
-          },
-          {
-            helloWorld: 'ola mundo',
-            ' valueOne': ' valor um',
-            ' valueTwo': ' valor dois'
-          }
-       ];
+          { helloWorld: 'hello_world',
+            valueOne: 'value_one',
+            valueTwo: 'value_two' },
+          { helloWorld: 'hi world',
+            valueOne: 'value1',
+            valueTwo: 'value2' },
+          { helloWorld: 'hei verden',
+            valueOne: 'verdi en',
+            valueTwo: 'verdi to' },
+          { helloWorld: 'ola mundo',
+            valueOne: 'valor um',
+            valueTwo: 'valor dois' }
+        ];
 
-        expect(_.isEqual(CSV.extract(lines, heads), expectedArray)).to.be(true);
+       expect(_.isEqual(CSV.extract(lines, heads), expectedArray)).to.be(true);
       });
     },
     parseLineValue: () => {
       let lines = [
         '"hello_world"; "value_one"; "value_two";',
-        'hi world; value1; value2;',
-        'hei verden; verdi en; verdi to;',
-        'ola mundo; valor um; valor dois;',
+        '"hi world"; "value1"; "value2";',
+        '"hei verden"; "verdi en"; "verdi to";',
+        '"ola mundo"; "valor um"; "valor dois";',
       ], expectedLine = [
-        'hello_world;value_one;value_two;'.split(';'),
-        'hi world; value1; value2;'.split(';'),
-        'hei verden; verdi en; verdi to;'.split(';'),
-        'ola mundo; valor um; valor dois;'.split(';'),
+        'hello_world;value_one;value_two'.split(';'),
+        'hi world;value1;value2'.split(';'),
+        'hei verden;verdi en;verdi to'.split(';'),
+        'ola mundo;valor um;valor dois'.split(';'),
       ]
 
       lines.forEach( (line, index) => {
@@ -123,35 +127,41 @@ new TestTarget(CSV, {
         let csvString, heads;
 
         let lines = [
-          'hello_world; value_one; value_two;',
-          'hi world; value1; value2;',
-          'hei verden; verdi en; verdi to;',
-          'ola mundo; valor um; valor dois;',
+          '\"hello_world\";\"value_one\";\"value_two\";',
+          '\"hi world\";\"value1\";\"value2\";',
+          '\"hei verden\";\"verdi en\";\"verdi to\";',
+          '\"ola mundo\";\"valor um\";\"valor dois\";',
         ];
         csvString = lines.join('\n');
-        lines = CSV.getLines(csvString);
+        let model = {
+          getFields: () => {
+            return ['helloWorld', 'valueOne', 'valueTwo'];
+          }
+        }
+
+        lines = CSV.getLines(csvString, model);
         heads = CSV.getHeads(csvString);
 
         let expectedArray = [
             {
               helloWorld: 'hello_world',
-              ' valueOne': ' value_one',
-              ' valueTwo': ' value_two'
+              'valueOne': 'value_one',
+              'valueTwo': 'value_two'
             },
             {
               helloWorld: 'hi world',
-              ' valueOne': ' value1',
-              ' valueTwo': ' value2'
+              'valueOne': 'value1',
+              'valueTwo': 'value2'
             },
             {
               helloWorld: 'hei verden',
-              ' valueOne': ' verdi en',
-              ' valueTwo': ' verdi to'
+              'valueOne': 'verdi en',
+              'valueTwo': 'verdi to'
             },
             {
               helloWorld: 'ola mundo',
-              ' valueOne': ' valor um',
-              ' valueTwo': ' valor dois'
+              'valueOne': 'valor um',
+              'valueTwo': 'valor dois'
             }
          ];
         lines.forEach( (line, index) => {

@@ -1,7 +1,11 @@
 const _ = require('lodash');
 
 function getType(obj) {
-  return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
+  let objType = ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
+
+  objType = objType === 'asyncfunction' ? 'function' : objType;
+
+  return objType;
 }
 
 function exposed(expose, assert, parent = '') {
@@ -21,7 +25,7 @@ function exposed(expose, assert, parent = '') {
     let item = expose[key],
         type = getType(item);
 
-    if (type === 'object' && Object.keys(item).length > 0) {
+    if ((type === 'object' && _.isObject(assert[key])) && Object.keys(item).length > 0) {
       if (!exposed(item, assert[key], `${key}.`)) {
         return false;
       }
