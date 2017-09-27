@@ -47,14 +47,29 @@ class HTTP {
 
     @description
     Peform the post request to a URL.
-    @TODO add support to body data.
 
     @param {String} url URL to be accessed
+    @param {Object} body_request the body of you request
+    @param {Object} data_type the http application used
     @returns {Promise}
   */
-  static post(url) {
-    return HTTP._request('post', url);
-  }
-}
+  static post(target, body_request, data_type = 'application/json') {
 
+  return new Promise( (resolve, reject)=> {
+    request.post({
+      headers: {'content-type' : data_type},
+      url:     target,
+      body:    body_request
+    }, function(error, response, body){
+          if (!error) {
+              resolve(body);
+          }
+          else {console.log(error)}
+    })
+
+  });
+
+  }
+
+}
 module.exports = HTTP;
