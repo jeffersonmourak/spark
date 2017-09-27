@@ -1,17 +1,22 @@
 const _ = require('lodash');
+const Base = require('@models/base');
+const base = new Base([]);
 
 class CSV {
   static get regex() {
     return {
       string: /\"(.*)\"/g,
+      field: /(\"([\s\S]*?)\"\;)/g,
       camel: /_(\S)/g
     };
   }
 
-  static getLines(fileString) {
-    var lines = fileString.split('\n');
-    lines.shift();
-    return lines.join('');;
+
+  static getLines(fileString, model = base) {
+    let fields = model.getFields(),
+        lineRegex = new RegExp('(\\"([\\s\\S]*?)\\"\\;){' + fields.length + '}', 'g');
+
+    return fileString.match(lineRegex);
   }
 
   static camelfy(string) {
@@ -58,23 +63,13 @@ class CSV {
     @param {String} heads vector containing header
     @returns {Object}
   */
-  static extract(text, heads) {
+  static parseLineValue(line) {
+    debugger;
+    return _.map(line.match(CSV.regex.field), data => {
+      let matchData = new RegExp(CSV.regex.string).exec(data);
 
-      var vector_final = [];
-      var acumulado = '';
-      var acumulando = false;
-      var n = 0;
-      for(var x = 0; x < text.length; x++) {
-        if(text[x] == '"') {
-          if(acumulando && text[x+1] == ';') {
-            acumulando = false;
-            vector_final[n] = acumulado;
-            n++;
-          }
-          else {
-            acumulando = true;
-            acumulado = '';
-          }
+        if (matchData !== null) {
+          data = matchData[1];
         }
         else {
           if(acumulando) acumulado += text[x];

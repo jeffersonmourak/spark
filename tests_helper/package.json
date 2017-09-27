@@ -19,6 +19,7 @@
     "@core": "../backend/core",
     "@crawler": "../backend/crawler",
     "@root": "../backend",
-    "@test": "."
+    "@test": ".",
+    "@models": "../backend/models"
   }
 }
