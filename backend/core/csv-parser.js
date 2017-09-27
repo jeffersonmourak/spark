@@ -11,7 +11,6 @@ class CSV {
     };
   }
 
-
   static getLines(fileString, model = base) {
     let fields = model.getFields(),
         lineRegex = new RegExp('(\\"([\\s\\S]*?)\\"\\;){' + fields.length + '}', 'g');
@@ -35,11 +34,12 @@ class CSV {
 
   static getHeads(text) {
     var firstLine = text.split('\n').shift();
+
     var vector = firstLine.split(';').map(key => {
       let match = new RegExp(CSV.regex.string).exec(key);
 
       if (match === null) {
-        return;
+        return CSV.camelfy(key);
       }
       key = CSV.camelfy(match[1]);
 
@@ -54,14 +54,13 @@ class CSV {
   }
 
   /**
-    extract
+    Parse Line Value
 
     @description
-    Extract the csv elements
+    Extract strings from CSV
 
-    @param {String} text The text os body
-    @param {String} heads vector containing header
-    @returns {Object}
+    @param {Array} line Line from CSV
+    @returns {Array}
   */
   static parseLineValue(line) {
     debugger;
@@ -71,27 +70,44 @@ class CSV {
         if (matchData !== null) {
           data = matchData[1];
         }
-        else {
-          if(acumulando) acumulado += text[x];
-        }
+      return data;
+    })
+  }
+
+  /**
+    Extract line data
+
+    @description
+    Extract columns object from each line
+
+    @param {Array} line Line from CSV
+    @param {Array} heads Array of names for each column
+    @returns {Array}
+  */
+  static extractLine(line, heads) {
+    return _.reduce(CSV.parseLineValue(line), (ac ,val, key) => {
+      if (heads[key]) {
+        ac[heads[key]] = val;
       }
+      return ac;
+    }, {});
+  }
 
-      var object_extracted = [];
-      var n_elements = 0;
-      for(var loop = 0; loop < Object.keys(vector_final).length-1;) {
+  /**
+    extract
 
-        object_extracted[n_elements] = {};
+    @description
+    Extract the csv elements
 
-        for(var internal_loop = 0; internal_loop < Object.keys(heads).length; internal_loop++) {
-          if(vector_final[loop] !== undefined) object_extracted[n_elements][heads[internal_loop]] = vector_final[loop];
-          else object_extracted[n_elements][heads[internal_loop]] = '';
-          loop++;
-        }
-
-        n_elements++;
-      }
-
-      return object_extracted;
+    @param {Array} elements The text os body
+    @param {String} heads vector containing header
+    @returns {Object}
+  */
+  static extract(lines, heads) {
+    return _.reduce(lines, (parsed, line) => {
+          parsed.push(CSV.extractLine(line, heads));
+      return parsed;
+    } ,[]);
   }
 
 }

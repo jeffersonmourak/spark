@@ -37,10 +37,10 @@ class FileCoverage {
             this.readDir(filePath);
           }
 
-          if (this.isJS(file) && !this.thereIsTest(filePath)) {
-            throw new Error(`Missing file test for ${filePath}`);
-            exit(1);
-          }
+          // if (this.isJS(file) && !this.thereIsTest(filePath)) {
+          //   throw new Error(`Missing file test for ${filePath}`);
+          //   exit(1);
+          // }
         }
       })
     }
