@@ -1,5 +1,5 @@
 const request = require('request');
-
+const _ = require('lodash');
 /**
   HTTP class
 
@@ -18,10 +18,12 @@ class HTTP {
     @param {String} url URL to be accessed
     @returns {Promise}
   */
-  static _request(method, url) {
+  static _request(method, url, data = {}) {
     return new Promise( (resolve, reject)=> {
-      request[method](url, (err, response, body) => {
-        if (err || response.statusCode !== 200) {
+      let requestSettings = _.defaults({ url }, data);
+
+      request[method](requestSettings, (err, response, body) => {
+        if (err || (response.statusCode < 200 && response.statusCode > 299 )) {
           reject(response);
         }
         resolve(body);
@@ -49,27 +51,16 @@ class HTTP {
     Peform the post request to a URL.
 
     @param {String} url URL to be accessed
-    @param {Object} body_request the body of you request
-    @param {Object} data_type the http application used
+    @param {Object} body Object with post data
+    @param {String} dataType content-type header
     @returns {Promise}
   */
-  static post(target, body_request, data_type = 'application/json') {
-
-  return new Promise( (resolve, reject)=> {
-    request.post({
-      headers: {'content-type' : data_type},
-      url:     target,
-      body:    body_request
-    }, function(error, response, body){
-          if (!error) {
-              resolve(body);
-          }
-          else {console.log(error)}
-    })
-
-  });
-
+  static post(url, body, dataType = 'application/json') {
+    return HTTP._request('post', url, {
+      headers: {'content-type' : dataType},
+      body: JSON.stringify(body)
+    });
   }
-
 }
+
 module.exports = HTTP;
