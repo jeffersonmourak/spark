@@ -5,8 +5,8 @@ const Screen = require('@core/screen');
 const fs = require('fs'),
       ufrn = require('@crawler/ufrn'),
       CSV = require('@core/csv-parser'),
-      BuildsModel = require('@models/builds');
-      PeopleModel = require('@models/people');
+      BuildsModel = require('@models/builds'),
+      PeopleModel = require('@models/people'),
       ExtentionsModel = require('@models/extensions');
 
 class Indexer {

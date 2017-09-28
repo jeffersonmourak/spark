@@ -30,6 +30,7 @@
     "@core": "./core",
     "@crawler": "./crawler",
     "@root": ".",
+    "@api": "./api",
     "@test": "../tests_helper",
     "@models": "./models"
   },
