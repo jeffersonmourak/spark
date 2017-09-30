@@ -1,10 +1,12 @@
-const express = require('express')
-const app = express()
+require('module-alias/register');
 
-app.get('/', function (req, res) {
-  res.send('Welcome to backend')
-})
+const SetupRoutes = require('@api/routes/setup');
+const express = require('express');
+
+const app = express();
+
+SetupRoutes.start(app);
 
 app.listen(3000, function () {
-  console.log('Example app listening on port 3000!')
-})
+  console.log('Running Server at port 3000');
+});
