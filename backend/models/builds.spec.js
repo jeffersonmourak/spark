@@ -1,3 +1,3 @@
-describe('Base Model', () => {
+describe('Builds Model', () => {
   it.skip('Debug code skiped');
 });
