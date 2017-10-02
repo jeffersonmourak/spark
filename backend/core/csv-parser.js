@@ -1,6 +1,6 @@
-const _ = require('lodash');
-const Base = require('@models/base');
-const base = new Base([]);
+const _ = require('lodash'),
+      Base = require('@models/base'),
+      base = new Base([]);
 
 class CSV {
   static get regex() {
@@ -32,27 +32,6 @@ class CSV {
     return string;
   }
 
-  static getHeads(text) {
-    var firstLine = text.split('\n').shift();
-
-    var vector = firstLine.split(';').map(key => {
-      let match = new RegExp(CSV.regex.string).exec(key);
-
-      if (match === null) {
-        return CSV.camelfy(key);
-      }
-      key = CSV.camelfy(match[1]);
-
-      return key;
-    });
-
-    var vector_final = [];
-    for(var loop = 0; loop < Object.keys(vector).length-1; loop++)
-      vector_final[loop] = vector[loop];
-
-    return vector_final;
-  }
-
   /**
     Parse Line Value
 
@@ -63,7 +42,6 @@ class CSV {
     @returns {Array}
   */
   static parseLineValue(line) {
-    debugger;
     return _.map(line.match(CSV.regex.field), data => {
       let matchData = new RegExp(CSV.regex.string).exec(data);
 
@@ -71,7 +49,7 @@ class CSV {
           data = matchData[1];
         }
       return data;
-    })
+    });
   }
 
   /**
@@ -84,13 +62,18 @@ class CSV {
     @param {Array} heads Array of names for each column
     @returns {Array}
   */
-  static extractLine(line, heads) {
-    return _.reduce(CSV.parseLineValue(line), (ac ,val, key) => {
+  static extractLine(line, model) {
+    let dataModel = new model();
+    let heads = dataModel.getFields();
+    let data = _.reduce(CSV.parseLineValue(line), (ac ,val, key) => {
       if (heads[key]) {
         ac[heads[key]] = val;
       }
       return ac;
     }, {});
+
+    dataModel.set(data);
+    return dataModel;
   }
 
   /**
@@ -103,9 +86,9 @@ class CSV {
     @param {String} heads vector containing header
     @returns {Object}
   */
-  static extract(lines, heads) {
+  static extract(lines, model) {
     return _.reduce(lines, (parsed, line) => {
-          parsed.push(CSV.extractLine(line, heads));
+          parsed.push(CSV.extractLine(line, model));
       return parsed;
     } ,[]);
   }

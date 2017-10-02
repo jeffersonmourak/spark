@@ -1,5 +1,5 @@
-const HTTP = require('@core/http');
-const Screen = require('@core/screen');
+const HTTP = require('@core/http'),
+      Screen = require('@core/screen');
 
 class DataBase {
   static get url() {
@@ -9,17 +9,26 @@ class DataBase {
     insert
 
     @description
-    Insert a element on database
+    Insere um elemento no banco de dados
 
-    @param {String} category The catecory of the element
-    @param {String} type the subcategory of the element
-    @param {Object} The object to insert
-    @returns {boolean}
+    @param {String} type Categoria do dado
+    @param {Object} element Elemento a ser adicionado
+    @returns {Promise}
   */
   static insert(type, element) {
     return HTTP.post(`${DataBase.url}/ufrn_${type}/${type}`, element);
   }
 
+  /**
+    insertAll
+
+    @description
+    Insere um elemento no banco de dados
+
+    @param {String} type Categoria do dado
+    @param {Array} elements Elementos a serem adicionados
+    @returns {Promise}
+  */
   static async insertAll(type, elements) {
     let i = 1;
     for (let element of elements) {
