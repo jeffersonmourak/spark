@@ -61,6 +61,19 @@ class HTTP {
       body: JSON.stringify(body)
     });
   }
+
+  /**
+    delete
+
+    @description
+    Peform the delete request to a URL.
+
+    @param {String} url URL to be accessed
+    @returns {Promise}
+  */
+  static delete(url) {
+    return HTTP._request('delete', url);
+  }
 }
 
 module.exports = HTTP;

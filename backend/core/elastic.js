@@ -1,10 +1,15 @@
 const HTTP = require('@core/http'),
       Screen = require('@core/screen');
 
-class DataBase {
+class Elastic {
   static get url() {
     return 'http://elastic.spark.dev';
   }
+
+  static urlFactory(type) {
+    return `${Elastic.url}/ufrn_${type}/${type}`;
+  }
+
   /**
     insert
 
@@ -16,7 +21,7 @@ class DataBase {
     @returns {Promise}
   */
   static insert(type, element) {
-    return HTTP.post(`${DataBase.url}/ufrn_${type}/${type}`, element);
+    return HTTP.post(Elastic.urlFactory(type), element);
   }
 
   /**
@@ -34,7 +39,7 @@ class DataBase {
     for (let element of elements) {
       try {
         Screen.progressMessage(`Adding ${i} of ${elements.length}`, Screen.colors.foreground.green);
-        await DataBase.insert(type, element);
+        await Elastic.insert(type, element);
       } catch (e) {
         Screen.breakLine();
         Screen.printError(e);
@@ -44,6 +49,10 @@ class DataBase {
     }
     Screen.breakLine();
   }
+
+  async clearCategory(category) {
+    return HTTP.delete(`${Elastic.url}/ufrn_${category}`);
+  }
 }
 
-module.exports = DataBase;
+module.exports = Elastic;
