@@ -1,11 +1,11 @@
 const Base = require('./base');
 
-class AcervoModel extends Base {
+class ProgramasPosGradModel extends Base {
   /**
-    ObrasModel
+    OProgrmasDradModel
 
     @description
-    Esta é a classe de modelo dos dados do acervo das bibliotecas
+    Esta é a classe de modelo dos dados dos Programas de pós-graduação da UFRN.
 
     @param {Object} [data] Dado opcional para criar um modelo já preenchido
   */
@@ -23,12 +23,11 @@ class AcervoModel extends Base {
   */
   static getFields() {
     return [
-      'idExemplar',
-      'titulo',
-      'quantidadeMateriaisAtivosTitulo',
-      'biblioteca'
+      'programa',
+      'sigla',
+      'siglaAcademica'
     ];
   }
 }
 
-module.exports = AcervoModel;
+module.exports = ProgramasPosGradModel;

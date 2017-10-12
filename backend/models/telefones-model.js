@@ -1,11 +1,11 @@
 const Base = require('./base');
 
-class AcervoModel extends Base {
+class TelefonesModel extends Base {
   /**
-    ObrasModel
+    TelefonesModel
 
     @description
-    Esta é a classe de modelo dos dados do acervo das bibliotecas
+    Esta é a classe de modelo dos telefones da UFRN.
 
     @param {Object} [data] Dado opcional para criar um modelo já preenchido
   */
@@ -23,12 +23,13 @@ class AcervoModel extends Base {
   */
   static getFields() {
     return [
-      'idExemplar',
-      'titulo',
-      'quantidadeMateriaisAtivosTitulo',
-      'biblioteca'
+      'unidadeLocalizacao',
+      'setor',
+      'linhaTelefonica',
+      'numero',
+      'tipo'
     ];
   }
 }
 
-module.exports = AcervoModel;
+module.exports = TelefonesModel;

@@ -14,7 +14,12 @@ const ExtensaoRoute = require('@api/routes/extensao-route'),
       EditaisRoute = require('@api/routes/editais-route'),
       ProdutosRoute = require('@api/routes/produtos-route'),
       DocentesRoute = require('@api/routes/docentes-route'),
-      FunctionsRoute = require('@api/routes/functions-route');
+      FunctionsRoute = require('@api/routes/functions-route'),
+      posGraduacoesRoute = require('@api/routes/posgraduacoes-route'),
+      programasPosGraduacoesRoute = require('@api/routes/programasposgrad-route'),
+      cursosRoute = require('@api/routes/cursos-route'),
+      conveniosRoute = require('@api/routes/convenios-route'),
+      telefonesRoute = require('@api/routes/telefones-route');
 
 class SetupRoutes {
   /**
@@ -43,7 +48,12 @@ class SetupRoutes {
       EditaisRoute,
       ProdutosRoute,
       DocentesRoute,
-      FunctionsRoute
+      FunctionsRoute,
+      posGraduacoesRoute,
+      programasPosGraduacoesRoute,
+      cursosRoute,
+      conveniosRoute,
+      telefonesRoute
     ];
   }
 

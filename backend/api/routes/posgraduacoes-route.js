@@ -1,0 +1,37 @@
+const Route = require('@api/routes/route'),
+      ufrn = require('@crawler/ufrn'),
+      posGraduacoesModel = require('@models/posgraduacoes-model');
+
+class posGraduacoesRoute extends Route {
+  /**
+    Classe da rota para dados das Obras
+
+    @description
+    Essa Class é responsável por gerenciar as requisições para a rota /obras
+
+    @param {Express} expressApp Aplicação instancia de expressApp
+    @param {String} url Url para acesso via HTTP
+  */
+  constructor(expressApp) {
+    super(expressApp, '/posgraduacoes')
+  }
+
+  /**
+    onGet
+
+    @description
+    Função para processamento da rota durante requisções GET
+
+    @returns {Promise}
+  */
+  async onGet(request) {
+    let data = await ufrn.getAndProcess(ufrn.urls.posGraduacoes, posGraduacoesModel)
+
+    return {
+      length: data.length,
+      hits: data
+    };
+  }
+}
+
+module.exports = posGraduacoesRoute;

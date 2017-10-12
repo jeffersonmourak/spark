@@ -48,7 +48,7 @@ class CSV {
         if (matchData !== null) {
           data = matchData[1];
         }
-      return data;
+      return data.replace(/\s{2,}/g, ' '); // remove espaços em branco desnescesários
     });
   }
 

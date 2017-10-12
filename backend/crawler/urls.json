@@ -14,5 +14,10 @@
   "editais": "http://dados.ufrn.br/dataset/editais-de-concursos",
   "products_extension": "http://dados.ufrn.br/dataset/produtos-de-extensao",
   "docentes": "http://dados.ufrn.br/dataset/docentes",
-  "functions": "http://dados.ufrn.br/dataset/funcoes"
+  "functions": "http://dados.ufrn.br/dataset/funcoes",
+  "posGraduacoes": "http://dados.ufrn.br/dataset/cursos-de-pos-graduacao",
+  "programasPosGraduacoes": "http://dados.ufrn.br/dataset/programas-de-pos-graduacao",
+  "cursos": "http://dados.ufrn.br/dataset/cursos-ufrn",
+  "convenios": "http://dados.ufrn.br/dataset/convenios",
+  "telefones": "http://dados.ufrn.br/dataset/telefones"
 }
