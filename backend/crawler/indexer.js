@@ -1,54 +1,53 @@
 require('module-alias/register');
-const DataBase = require('@core/data-base.js');
-const Screen = require('@core/screen');
 
-const fs = require('fs'),
-      ufrn = require('@crawler/ufrn'),
-      CSV = require('@core/csv-parser'),
-      BuildsModel = require('@models/builds'),
-      PeopleModel = require('@models/people'),
-      ExtentionsModel = require('@models/extensions');
+const ufrn = require('@crawler/ufrn'),
+      servidoresModel = require('@models/servidores-model'),
+      obrasModel = require('@models/obra-model'),
+      extensaoModel = require('@models/extensao-model'),
+      Screen = require('@core/screen'),
+      Elastic = require('@core/elastic');
 
-class Indexer {
-  static getData(csv, model) {
-    let dataModel = new model();
-    let elements = CSV.getLines(csv, dataModel);
-    elements.shift();
-
-    Screen.printLine(`Parsing ${elements.length} lines`, Screen.colors.foreground.yellow);
-
-    return CSV.extract(elements, dataModel.getFields());
+let sections = [
+  {
+    category: 'servidores',
+    url: ufrn.urls.people,
+    model: servidoresModel
+  },
+  {
+    category: 'obras',
+    url: ufrn.urls.builds,
+    model: obrasModel
+  },
+  {
+    category: 'extensao',
+    url: ufrn.urls.extension,
+    model: extensaoModel
   }
+];
 
-  static async index(route, type, model) {
-    Screen.printLine(`Indexing ${type}`, Screen.colors.background.green);
+async function clearCategory(category) {
+  try {
+    await Elastic.clearCategory(category);
+  } catch(e) {}
 
-    Screen.printLine('Accessing UFRN open data', Screen.colors.bright);
+  return true;
+}
 
+async function index() {
+  for (let section of sections) {
+    Screen.printLine(`Indexing: ${section.category}`, Screen.colors.green);
     try {
-      let csv = await ufrn.acquire(route);
-      Screen.printLine('Data acquired!', Screen.colors.foreground.green);
-      let data = Indexer.getData(csv, model);
+      await clearCategory(section.category);
 
-      await DataBase.insertAll(type, data);
+      let data = await ufrn.getAndProcess(section.url, section.model);
+      Screen.printLine(`Lines Parsed: ${data.length}`);
 
-      Screen.printLine('Done!', Screen.colors.foreground.green);
-
-    } catch (e) {
-      console.log(e);
-      Screen.printError('Error at UFRN server');
+      await Elastic.insertAll(section.category ,data);
+    } catch(e) {
+      Screen.error(e);
       exit(1);
     }
   }
 }
 
-
-async function start() {
-  await Indexer.index(ufrn.urls.builds, 'builds', BuildsModel);
-
-  await Indexer.index(ufrn.urls.people, 'people', PeopleModel);
-
-  await Indexer.index(ufrn.urls.extension, 'extension', ExtentionsModel);
-}
-
-start().catch(Screen.printError);
+index();

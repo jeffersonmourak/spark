@@ -1,4 +1,7 @@
 class Screen {
+  /**
+    Classe de estlilização dos outputs do console.
+  */
   static get colors() {
     return {
       reset: '\x1b[0m',
@@ -31,10 +34,28 @@ class Screen {
     }
   }
 
+  /**
+    printLine
+
+    @description
+    Exibe um texto com quebra de linha no console.
+
+    @param {String} message Texto a ser exibido
+    @param {String} color Cor a ser exibida com o texto
+  */
   static printLine(message, color) {
     Screen.print(`${message}\n`, color);
   }
 
+  /**
+    print
+
+    @description
+    Exibe um texto no console.
+
+    @param {String} message Texto a ser exibido
+    @param {String} color Cor a ser exibida com o texto
+  */
   static print(message, color) {
     if (color) {
       process.stdout.write(`${color}${message}${Screen.colors.reset}`);
@@ -43,16 +64,39 @@ class Screen {
     process.stdout.write(message);
   }
 
+  /**
+    progressMessage
+
+    @description
+    Exibe um texto que volta ao ponto inicial da linha e sobrescreve.
+
+    @param {String} message Texto a ser exibido
+    @param {String} color Cor a ser exibida com o texto
+  */
   static progressMessage(message, color) {
     process.stdout.clearLine();
     process.stdout.cursorTo(0);
     Screen.print(message, color);
   }
 
+  /**
+    printError
+
+    @description
+    Exibe uma mensagem de erro em vermelho com o prefixo "ERROR:"
+
+    @param {String} message Texto a ser exibido
+  */
   static printError(message) {
     Screen.printLine(`ERROR: ${message}`, Screen.colors.foreground.red);
   }
 
+  /**
+    breakLine
+
+    @description
+    Pula uma linha do console
+  */
   static breakLine() {
     Screen.printLine('');
   }

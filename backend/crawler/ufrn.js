@@ -1,6 +1,7 @@
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const HTTP = require('@core/http');
+const CSV = require('@core/csv-parser');
 const URLS = require('@crawler/urls.json');
 
 class UFRN {
@@ -47,6 +48,24 @@ class UFRN {
     let page = UFRN._getPage(await HTTP.get(url)),
         fileDownload = UFRN._downloadFile(page);
     return await HTTP.get(fileDownload);
+  }
+
+  /**
+    getAndProcess
+
+    @description
+    Function to process data from CSV after get them in UFRN open data website
+
+    @param {String} url Url of page.
+    @param {BaseModel} model Model of data.
+    @returns {Array}
+  */
+  static async getAndProcess(url, model) {
+    let csv = await UFRN.acquire(url);
+    let elements = CSV.getLines(csv, model);
+    elements.shift();
+
+    return CSV.extract(elements, model);
   }
 }
 

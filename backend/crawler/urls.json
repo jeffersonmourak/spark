@@ -1,5 +1,23 @@
 {
   "people": "http://dados.ufrn.br/dataset/pessoas",
   "extension": "http://dados.ufrn.br/dataset/atividades-de-extensao",
-  "builds": "http://dados.ufrn.br/dataset/obras"
+  "builds": "http://dados.ufrn.br/dataset/obras",
+  "libraryCollection": "http://dados.ufrn.br/dataset/acervo-biblioteca",
+  "contracts": "http://dados.ufrn.br/dataset/contratos",
+  "gastos": "http://dados.ufrn.br/dataset/gastos",
+  "research_groups": "http://dados.ufrn.br/dataset/grupos-de-pesquisa",
+  "pesquisadores": "http://dados.ufrn.br/dataset/pesquisadores",
+  "bolsistas": "http://dados.ufrn.br/dataset/bolsistas-de-iniciacao-cientifica",
+  "diarias": "http://dados.ufrn.br/dataset/diarias",
+  "projetos_pesquisa": "http://dados.ufrn.br/dataset/projetos-de-pesquisa",
+  "resolutions": "http://dados.ufrn.br/dataset/resolucoes",
+  "editais": "http://dados.ufrn.br/dataset/editais-de-concursos",
+  "products_extension": "http://dados.ufrn.br/dataset/produtos-de-extensao",
+  "docentes": "http://dados.ufrn.br/dataset/docentes",
+  "functions": "http://dados.ufrn.br/dataset/funcoes",
+  "posGraduacoes": "http://dados.ufrn.br/dataset/cursos-de-pos-graduacao",
+  "programasPosGraduacoes": "http://dados.ufrn.br/dataset/programas-de-pos-graduacao",
+  "cursos": "http://dados.ufrn.br/dataset/cursos-ufrn",
+  "convenios": "http://dados.ufrn.br/dataset/convenios",
+  "telefones": "http://dados.ufrn.br/dataset/telefones"
 }

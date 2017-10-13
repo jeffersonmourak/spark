@@ -1,7 +1,7 @@
 require('module-alias/register');
 
-const SetupRoutes = require('@api/routes/setup');
-const express = require('express');
+const SetupRoutes = require('@api/routes/setup'),
+      express = require('express');
 
 const app = express();
 
