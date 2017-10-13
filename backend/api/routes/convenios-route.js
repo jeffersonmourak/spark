@@ -10,7 +10,7 @@ class ConveniosRoute extends Route {
     Essa Class é responsável por gerenciar as requisições para a rota /convenios
 
     @param {Express} expressApp Aplicação instancia de expressApp
-    @param {String} url Url para acesso via HTTP
+    @param {String} url Url para acesso via HTTP 
   */
   constructor(expressApp) {
     super(expressApp, '/convenios')
