@@ -23,8 +23,9 @@ class GastosModel extends Base {
   */
   static getFields() {
     return [
+      'idUnidade',
       'unidade',
-      'naturesaDespesa',
+      'naturezaDespesa',
       'valor'
     ];
   }

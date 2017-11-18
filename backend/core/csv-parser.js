@@ -6,14 +6,14 @@ class CSV {
   static get regex() {
     return {
       string: /\"(.*)\"/g,
-      field: /(\"([\s\S]*?)\"\;)/g,
+      field: /(\"([\s\S]*?)\"(;|\r|\n))/g,
       camel: /_(\S)/g
     };
   }
 
   static getLines(fileString, model = base) {
     let fields = model.getFields(),
-        lineRegex = new RegExp('(\\"([\\s\\S]*?)\\"\\;){' + fields.length + '}', 'g');
+        lineRegex = new RegExp('(\\"(?:[\\s\\S]*?)\\"[\\r|\\n|;]){'+(fields.length)+'}', 'g');
 
     return fileString.match(lineRegex);
   }

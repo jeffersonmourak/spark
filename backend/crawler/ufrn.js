@@ -63,6 +63,7 @@ class UFRN {
   static async getAndProcess(url, model) {
     let csv = await UFRN.acquire(url);
     let elements = CSV.getLines(csv, model);
+    
     elements.shift();
 
     return CSV.extract(elements, model);
