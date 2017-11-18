@@ -24,6 +24,8 @@ class Route {
     this[`on${_.capitalize(req.method)}`]
     .call(this, req)
     .then((response) => {
+      res.setHeader("Access-Control-Allow-Origin", "*");
+      res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
       if (_.isObject(response)) {
         res.header('Content-Type', 'application/json');
         return res.send(JSON.stringify(response, null, 4));
