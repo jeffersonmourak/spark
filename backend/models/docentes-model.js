@@ -23,12 +23,15 @@ class DocentesModel extends Base {
   */
   static getFields() {
     return [
+      'idServidor',
       'siape',
       'nome',
+      'formacao',
       'tipoJornadaTrabalho',
       'vinculo',
       'categoria',
       'classeFuncional',
+      'idUnidadeLotacao',
       'lotacao',
       'admissao'
     ];
