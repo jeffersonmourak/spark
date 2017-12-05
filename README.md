@@ -1,6 +1,10 @@
 # Project Spark ⚡️
 UFRN Library index fast as light
 
+## Instances of this framework
+Consulta aos gastos: https://github.com/MatheusAlvesA/GastosUFRN<br />
+Consulta aos Docentes: https://github.com/kfjohnny2/SparkApp<br />
+
 ## Setting up develop environment
 Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads) and [Vagrant.](https://www.vagrantup.com/downloads.html)<br />
 ```
